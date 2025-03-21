@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* custom-ag-grid.css */
+
+/* Set the background color for the header row */
+.ag-header {
+  background-color: #f7fafc; /* Tailwind's bg-gray-100 */
+  border-bottom: none; /* Remove bottom border */
+}
+
+/* Remove all borders from the grid */
+.ag-theme-alpine .ag-root-wrapper,
+.ag-theme-alpine .ag-header,
+.ag-theme-alpine .ag-body-viewport,
+.ag-theme-alpine .ag-body-container,
+.ag-theme-alpine .ag-row {
+  border: none;
+}
+
+/* Add border radius to the grid */
+.ag-theme-alpine {
+  border-radius: 8px; /* Adjust the radius as needed */
+  overflow: hidden; /* Prevent overflow on rounded corners */
+}
+
+/* Optional: Style the grid rows or cells as needed */
+.ag-theme-alpine .ag-row,
+.ag-theme-alpine .ag-cell {
+  border: none; /* Ensures no borders are visible */
+}
+/* From Uiverse.io by gagan-gv */
+.loader span {
+  font-size: 100px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+  animation: blur 3s linear infinite;
+  line-height: 20px;
+  transition: all 0.5s;
+  letter-spacing: 0.2em;
+}
+
+@keyframes blur {
+  0%,
+  90% {
+    filter: blur(0);
+  }
+
+  50% {
+    filter: blur(10px);
+  }
+}
