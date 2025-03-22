@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -176,6 +177,10 @@ const RoleList = ({ token }) => {
       </div>
     </div>
   );
+};
+
+RoleList.propTypes = {
+  token: PropTypes.string.isRequired,
 };
 
 export default RoleList;

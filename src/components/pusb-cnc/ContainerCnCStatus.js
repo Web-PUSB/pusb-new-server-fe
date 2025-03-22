@@ -1,17 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import Loader from "../shared/Loader";
-
-const API_BASE_URL = "https://your-api-url.com"; // TODO: Replace with actual backend URL
+import Loader from "../shared/Loader"; 
+import { BaseUrl } from "../../config/config"; 
 
 const ContainerCnCStatus = ({ cnc }) => {
   const [loading, setLoading] = useState(null);
-  const [status, setStatus] = useState(cnc.status); // Store local status
+  const [status, setStatus] = useState(cnc.status);
 
   const handleToggleStatus = async () => {
     const isCurrentlyActive = status;
 
-    // Show confirmation dialog
     const confirmResult = await Swal.fire({
       title: `Are you sure?`,
       text: `You are about to ${isCurrentlyActive ? "deactivate" : "activate"} this CNC.`,
@@ -25,10 +24,10 @@ const ContainerCnCStatus = ({ cnc }) => {
 
     if (confirmResult.isConfirmed) {
       setLoading(cnc.id);
-      
+
       try {
         const response = await fetch(
-          `${API_BASE_URL}/pusb-cnc/${cnc.id}/${isCurrentlyActive ? "deactivate" : "activate"}`,
+          `${BaseUrl}/pusb-cnc/${cnc.id}/${isCurrentlyActive ? "deactivate" : "activate"}`,
           { method: "POST" }
         );
 
@@ -43,7 +42,7 @@ const ContainerCnCStatus = ({ cnc }) => {
             showConfirmButton: false,
           });
 
-          setStatus(!isCurrentlyActive); // Update local status
+          setStatus(!isCurrentlyActive);
         } else {
           throw new Error("Failed to update CNC status");
         }
@@ -84,6 +83,14 @@ const ContainerCnCStatus = ({ cnc }) => {
       )}
     </div>
   );
+};
+
+ContainerCnCStatus.propTypes = {
+  cnc: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    status: PropTypes.bool.isRequired,
+    name: PropTypes.string, 
+  }).isRequired,
 };
 
 export default ContainerCnCStatus;

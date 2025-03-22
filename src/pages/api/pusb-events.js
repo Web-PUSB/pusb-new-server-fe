@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { BaseUrl } = require('../../config/config');
+const axios = require("axios");
+const { BaseUrl } = require("../../config/config");
 
 const GetPUSBEvent = async () => {
   try {
@@ -33,7 +33,7 @@ const CreatePUSBEvent = async (data, token) => {
   try {
     const response = await axios.post(`${BaseUrl}/event_timeline`, data, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -50,12 +50,16 @@ const CreatePUSBEvent = async (data, token) => {
 
 const UpdatePUSBEvent = async (data, token, id) => {
   try {
-    const response = await axios.patch(`${BaseUrl}/event_timeline/${id}`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
+    const response = await axios.patch(
+      `${BaseUrl}/event_timeline/${id}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -74,10 +78,10 @@ const UpdateStatusPUSBEvent = async (status, token, id) => {
       { status },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -92,7 +96,9 @@ const UpdateStatusPUSBEvent = async (status, token, id) => {
 
 const GetPUSBEventTimeline = async (eventId) => {
   try {
-    const response = await axios.get(`${BaseUrl}/event_timeline/${eventId}/detail`);
+    const response = await axios.get(
+      `${BaseUrl}/event_timeline/${eventId}/detail`,
+    );
     return response.data ? response.data.data : null;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -107,7 +113,7 @@ const GetPUSBEventTimeline = async (eventId) => {
 const GetPUSBEventTimelineById = async (eventId, timelineId) => {
   try {
     const response = await axios.get(
-      `${BaseUrl}/event_timeline/${eventId}/detail/${timelineId}`
+      `${BaseUrl}/event_timeline/${eventId}/detail/${timelineId}`,
     );
     return response.data ? response.data.data[0] : null;
   } catch (error) {
@@ -129,7 +135,7 @@ const CreatePUSBEventTimeline = async (data, token, eventId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -151,7 +157,7 @@ const UpdatePUSBEventTimeline = async (data, token, eventId, timelineId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -172,7 +178,7 @@ const ActivatePUSBEventTimeline = async (token, eventId, timelineId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -193,7 +199,7 @@ const DeactivatePUSBEventTimeline = async (token, eventId, timelineId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response;
   } catch (error) {

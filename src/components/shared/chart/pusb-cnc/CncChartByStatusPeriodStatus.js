@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GetPUSBCNC } from "../api/pusb-cnc"; // Adjust the path based on your project structure
+import { getPUSBCNC } from "../../../../pages/api/pusb-cnc";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,7 +12,7 @@ const CncChartByStatus = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cnc = await GetPUSBCNC();
+        const cnc = await getPUSBCNC();
         setCncNumber(cnc.length);
 
         const statusCounts = {

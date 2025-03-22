@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Loader from "../shared/Loader";
 
@@ -41,7 +42,6 @@ const ContainerEventStatus = ({ event, token }) => {
             showConfirmButton: false,
           });
 
-          // Optionally update the local event status
           event.status = status;
         } else {
           throw new Error("Failed to update status");
@@ -96,6 +96,16 @@ const ContainerEventStatus = ({ event, token }) => {
       )}
     </div>
   );
+};
+
+ContainerEventStatus.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number.isRequired, 
+    status: PropTypes.oneOf(["SOON", "COMPLETE", "PRESENT"]).isRequired, 
+    title: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+  }).isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default ContainerEventStatus;

@@ -1,13 +1,14 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react"; 
+import PropTypes from "prop-types";
 import { AgGridReact } from "ag-grid-react";
 import { FiTrash, FiEdit } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";  // Changed to useNavigate
+import { useNavigate } from "react-router-dom";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import ContainerWorkplanStatus from "./ContainerWorkplanStatus";
 
 const WorkplanList = ({ workplans }) => {
-  const navigate = useNavigate();  // Changed to useNavigate
+  const navigate = useNavigate();
 
   const columns = useMemo(
     () => [
@@ -65,7 +66,7 @@ const WorkplanList = ({ workplans }) => {
           <div className="flex items-center h-full">
             <button
               onClick={() =>
-                navigate(`/pusb-profile/workplan/${params.data.id}/post`)  // Changed to navigate
+                navigate(`/pusb-profile/workplan/${params.data.id}/post`)
               }
               className="font-medium text-cyan-600 hover:underline"
             >
@@ -92,7 +93,7 @@ const WorkplanList = ({ workplans }) => {
           <div className="w-full flex justify-center items-center h-full gap-2">
             <button
               onClick={() =>
-                navigate(`/pusb-profile/workplan/${params.data.id}/edit`)  // Changed to navigate
+                navigate(`/pusb-profile/workplan/${params.data.id}/edit`)
               }
               className="font-medium text-cyan-600 hover:underline"
             >
@@ -109,7 +110,7 @@ const WorkplanList = ({ workplans }) => {
         flex: 1,
       },
     ],
-    [navigate]  // Using navigate in the dependency array
+    [navigate]
   );
 
   const gridOptions = {
@@ -146,6 +147,18 @@ const WorkplanList = ({ workplans }) => {
       </div>
     </div>
   );
+};
+
+WorkplanList.propTypes = {
+  workplans: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      thumbnail: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      status: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
 };
 
 export default WorkplanList;

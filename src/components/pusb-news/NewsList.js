@@ -1,9 +1,10 @@
 import React, { useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { FiTrash, FiEdit } from "react-icons/fi";
-import { formatTime } from "../../utils/FormatTime"; // Adjust path as needed
+import { formatTime } from "../../utils/FormatTime";
 
 const NewsList = ({ newss }) => {
   const columns = useMemo(
@@ -13,29 +14,25 @@ const NewsList = ({ newss }) => {
         field: "title",
         flex: 1,
         minWidth: 200,
-        cellRenderer: (params) => {
-          return (
-            <div className="flex items-center h-full">
-              <div className="line-clamp-3">{params.data.title}</div>
-            </div>
-          );
-        },
+        cellRenderer: (params) => (
+          <div className="flex items-center h-full">
+            <div className="line-clamp-3">{params.data.title}</div>
+          </div>
+        ),
       },
       {
         headerName: "Thumbnail",
         field: "thumbnail",
         minWidth: 200,
-        cellRenderer: (params) => {
-          return (
-            <div className="flex justify-center items-center h-full py-2">
-              <img
-                src={params.data.thumbnail}
-                alt={params.data.title}
-                className="h-20 w-20 object-cover"
-              />
-            </div>
-          );
-        },
+        cellRenderer: (params) => (
+          <div className="flex justify-center items-center h-full py-2">
+            <img
+              src={params.data.thumbnail}
+              alt={params.data.title}
+              className="h-20 w-20 object-cover"
+            />
+          </div>
+        ),
         sortable: false,
         filter: false,
       },
@@ -44,13 +41,11 @@ const NewsList = ({ newss }) => {
         field: "category",
         flex: 1,
         minWidth: 200,
-        cellRenderer: (params) => {
-          return (
-            <div className="flex items-center h-full">
-              <div className="line-clamp-3">{params.data.category}</div>
-            </div>
-          );
-        },
+        cellRenderer: (params) => (
+          <div className="flex items-center h-full">
+            <div className="line-clamp-3">{params.data.category}</div>
+          </div>
+        ),
       },
       {
         headerName: "Date Release",
@@ -58,15 +53,13 @@ const NewsList = ({ newss }) => {
         filter: "agDateColumnFilter",
         flex: 1,
         minWidth: 250,
-        cellRenderer: (params) => {
-          return (
-            <div className="flex items-center h-full">
-              <div className="line-clamp-3">
-                {formatTime(params.data.publish_date)}
-              </div>
+        cellRenderer: (params) => (
+          <div className="flex items-center h-full">
+            <div className="line-clamp-3">
+              {formatTime(params.data.publish_date)}
             </div>
-          );
-        },
+          </div>
+        ),
       },
       {
         headerName: "Actions",
@@ -106,14 +99,12 @@ const NewsList = ({ newss }) => {
     []
   );
 
-  // Define grid options
   const gridOptions = {
-    rowHeight: 100, // Set each row's height to 100 pixels
+    rowHeight: 100,
     paginationPageSize: 10,
     paginationPageSizeSelector: [10, 25, 50],
   };
 
-  // Define default column definitions
   const defaultColDef = {
     sortable: true,
     filter: true,
@@ -141,6 +132,18 @@ const NewsList = ({ newss }) => {
       />
     </div>
   );
+};
+
+NewsList.propTypes = {
+  newss: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      thumbnail: PropTypes.string,
+      category: PropTypes.string.isRequired,
+      publish_date: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default NewsList;

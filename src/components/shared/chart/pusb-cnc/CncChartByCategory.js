@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { GetPUSBCNC } from "../../../../pages/api/pusb-cnc";
+import { getPUSBCNC } from "../../../../pages/api/pusb-cnc";
 import { CNC } from "../../../../types/pusb-cnc-type";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -13,7 +13,7 @@ const CncChartByCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cnc = await GetPUSBCNC();
+        const cnc = await getPUSBCNC();
         setCncNumber(cnc.length);
 
         const categoryCounts = {
@@ -23,7 +23,7 @@ const CncChartByCategory = () => {
         };
 
         cnc.forEach((item) => {
-          if (categoryCounts.hasOwnProperty(item.category)) {
+          if (Object.prototype.hasOwnProperty.call(categoryCounts, item.category)) {
             categoryCounts[item.category]++;
           }
         });

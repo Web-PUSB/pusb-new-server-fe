@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FiPlus } from "react-icons/fi";
 import NewsList from "./NewsList";
 
@@ -16,6 +17,18 @@ const ContainerNewsList = ({ news }) => {
       <NewsList newss={news} />
     </>
   );
+};
+
+ContainerNewsList.propTypes = {
+  news: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      thumbnail: PropTypes.string,
+      content: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ContainerNewsList;

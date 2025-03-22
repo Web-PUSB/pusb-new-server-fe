@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const AccessRestricted = ({ handleLogout }) => {
   return (
@@ -25,6 +26,10 @@ const AccessRestricted = ({ handleLogout }) => {
       </div>
     </div>
   );
+};
+
+AccessRestricted.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
 };
 
 export default AccessRestricted;

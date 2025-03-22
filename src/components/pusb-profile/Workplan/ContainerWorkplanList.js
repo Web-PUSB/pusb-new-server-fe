@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"; 
+import PropTypes from "prop-types";
 import MainWorkplanList from "./WorkplanList";
 import { Button } from "flowbite-react";
 import { FiPlus } from "react-icons/fi";
@@ -19,6 +20,19 @@ const ContainerWorkplanList = ({ workplans }) => {
       <MainWorkplanList workplans={workplans} />
     </div>
   );
+};
+
+ContainerWorkplanList.propTypes = {
+  workplans: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ContainerWorkplanList;

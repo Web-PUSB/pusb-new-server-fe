@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { GetPUSBNews } from "../api/pusb-news"; // Adjust path as needed
+import { getPUSBNews } from "../../../../pages/api/pusb-news"; 
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +28,7 @@ const ChartNewsByPublished = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const news = await GetPUSBNews();
+        const news = await getPUSBNews();
 
         const monthCounts = Array(12).fill(0);
         const currentYear = new Date().getFullYear();

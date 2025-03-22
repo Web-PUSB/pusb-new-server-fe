@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
+import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Loader from "../../shared/Loader";
 
@@ -84,6 +85,13 @@ const ContainerWorkplanStatus = ({ cnc }) => {
       )}
     </div>
   );
+};
+
+ContainerWorkplanStatus.propTypes = {
+  cnc: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    status: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default ContainerWorkplanStatus;

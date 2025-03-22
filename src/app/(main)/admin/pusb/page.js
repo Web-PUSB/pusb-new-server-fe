@@ -3,19 +3,19 @@ import { MdBarChart, MdDashboard } from "react-icons/md";
 import { IoMdHome } from "react-icons/io";
 import { IoDocuments } from "react-icons/io5";
 
-import Widget from "../components/pusb-dashboard/Widget";
-import MiniCalendar from "../components/pusb-dashboard/MiniCalendar";
-import MiniTableNews from "../components/pusb-dashboard/MiniTableNews";
-import EventChartByStatus from "../components/shared/chart/pusb-event/EventChartByStatus";
-import EventChartByPeriod from "../components/shared/chart/pusb-event/EventChartByPeriod";
-import ChartNewsByPublished from "../components/shared/chart/pusb-news/ChartNewsByPublished";
-import ChartNewsByCategory from "../components/shared/chart/pusb-news/ChartNewsByCategory";
-import CncChartByStatus from "../components/shared/chart/pusb-cnc/CncChartByStatusPeriodStatus";
-import CncChartByCategory from "../components/shared/chart/pusb-cnc/CncChartByCategory";
+import Widget from "../../../../components/pusb-dashboard/Widget";
+import MiniCalendar from "../../../../components/pusb-dashboard/MiniCalendar";
+import MiniTableNews from "../../../../components/pusb-dashboard/MiniTableNews";
+import EventChartByStatus from "../../../../components/shared/chart/pusb-event/EventChartByStatus";
+import EventChartByPeriod from "../../../../components/shared/chart/pusb-event/EventChartByPeriod";
+import ChartNewsByPublished from "../../../../components/shared/chart/pusb-news/ChartNewsByPublished";
+import ChartNewsByCategory from "../../../../components/shared/chart/pusb-news/ChartNewsByCategory";
+import CncChartByStatus from "../../../../components/shared/chart/pusb-cnc/CncChartByStatusPeriodStatus";
+import CncChartByCategory from "../../../../components/shared/chart/pusb-cnc/CncChartByCategory";
 
-import { getPUSBEvent } from "../api/pusb-events";
-import { getPUSBCNC } from "../api/pusb-cnc";
-import { getPUSBNews } from "../api/pusb-news";
+import { getPUSBEvent } from "../../../../pages/api/pusb-events";
+import { getPUSBCNC } from "../../../../pages/api/pusb-cnc";
+import { getPUSBNews } from "../../../../pages/api/pusb-news";
 
 const Page = () => {
   const [eventsTotal, setEventsTotal] = useState(0);

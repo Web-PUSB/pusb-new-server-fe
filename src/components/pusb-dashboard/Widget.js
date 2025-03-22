@@ -1,8 +1,8 @@
+import React from "react";
+import PropTypes from "prop-types";
 import Card from "../../components/shared/Card";
 
-const Widget = (props) => {
-  const { icon, title, subtitle } = props;
-
+const Widget = ({ icon, title, subtitle }) => {
   return (
     <Card extra="!flex-row flex-grow items-center rounded-[20px] shadow-xl border border-gray-100">
       <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
@@ -17,6 +17,16 @@ const Widget = (props) => {
       </div>
     </Card>
   );
+};
+
+Widget.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired, 
+  subtitle: PropTypes.string,
+};
+
+Widget.defaultProps = {
+  subtitle: "", 
 };
 
 export default Widget;

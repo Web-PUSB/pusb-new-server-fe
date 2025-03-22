@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Card = ({ variant, extra, children, ...rest }) => {
   const variantClass = variant === "outlined" ? "border border-gray-200" : "";
@@ -15,6 +16,19 @@ const Card = ({ variant, extra, children, ...rest }) => {
       {children}
     </div>
   );
+};
+
+Card.propTypes = {
+  variant: PropTypes.oneOf(["outlined", "default"]),
+  extra: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  default: PropTypes.bool,
+};
+
+Card.defaultProps = {
+  variant: "default",
+  extra: "",
+  default: false,
 };
 
 export default Card;

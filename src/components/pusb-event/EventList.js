@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -176,6 +177,21 @@ const EventList = ({ events }) => {
       </div>
     </div>
   );
+};
+
+EventList.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      thumbnail: PropTypes.string,
+      period: PropTypes.string.isRequired,
+      audience: PropTypes.string.isRequired,
+      start_date: PropTypes.string.isRequired,
+      end_date: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default EventList;

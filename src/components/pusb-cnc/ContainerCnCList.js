@@ -1,9 +1,16 @@
 import React from "react";
-import CnCList from "../../components/pusb-cnc/CnCList"; // Adjust the import path as needed
+import PropTypes from "prop-types";
+import CnCList from "../../components/pusb-cnc/CnCList";
 import { Button } from "flowbite-react";
 import { FiPlus } from "react-icons/fi";
-import { Link } from "react-router-dom"; // Use react-router-dom for routing
-import { CNC } from "../../types/pusb-cnc-type"; // Adjust the import path as needed
+import { Link } from "react-router-dom";
+
+const cncShape = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired, 
+});
 
 const ContainerCnCList = ({ cncs }) => {
   return (
@@ -19,6 +26,10 @@ const ContainerCnCList = ({ cncs }) => {
       <CnCList cncs={cncs} />
     </>
   );
+};
+
+ContainerCnCList.propTypes = {
+  cncs: PropTypes.arrayOf(cncShape).isRequired,
 };
 
 export default ContainerCnCList;

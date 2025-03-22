@@ -1,4 +1,5 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react"; 
+import PropTypes from "prop-types";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -100,6 +101,20 @@ const UserList = ({ users, loading, token }) => {
       />
     </div>
   );
+};
+
+UserList.propTypes = {
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      role: PropTypes.string,
+      ministry_id: PropTypes.number,
+    })
+  ).isRequired,
+  loading: PropTypes.bool.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default UserList;

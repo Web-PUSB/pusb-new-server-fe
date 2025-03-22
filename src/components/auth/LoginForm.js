@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Label, TextInput } from "flowbite-react";
-import { FiMail, FiEye, FiEyeOff } from "react-icons/fi";
+import { useSession } from "../../context/sessionContext"; 
 import Swal from "sweetalert2";
-import Loader from "../shared/Loader";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +10,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { setIsAuthenticated } = useSession(); 
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -20,24 +19,23 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      // Mock API call (replace with real authentication logic)
-      const result = await fakeSignIn(email, password);
 
-      if (!result) {
+    try {
+      if (email === "admin@gmail.com" && password === "password") {
+        setIsAuthenticated(true);
+
         Swal.fire({
-          title: "Error",
-          text: "An unexpected error occurred. Please try again.",
-          icon: "error",
+          title: "Success",
+          text: "Logged in successfully",
+          icon: "success",
           timer: 3000,
           toast: true,
           position: "top-end",
           showConfirmButton: false,
         });
-        return;
-      }
 
-      if (result.error) {
+        navigate("/");
+      } else {
         Swal.fire({
           title: "Invalid Login",
           text: "Invalid email or password. Please try again.",
@@ -47,17 +45,6 @@ const LoginForm = () => {
           position: "top-end",
           showConfirmButton: false,
         });
-      } else {
-        Swal.fire({
-          title: "Success",
-          text: `Logged in successfully`,
-          icon: "success",
-          timer: 3000,
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-        });
-        navigate("/admin/pusb");
       }
     } catch (error) {
       Swal.fire({
@@ -69,64 +56,52 @@ const LoginForm = () => {
         position: "top-end",
         showConfirmButton: false,
       });
-      console.error("Session error:", error);
+      console.error("Login error:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Mock sign-in function (replace with real authentication logic)
-  const fakeSignIn = (email, password) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (email === "test@example.com" && password === "password") {
-          resolve({ success: true });
-        } else {
-          resolve({ error: true });
-        }
-      }, 1000);
-    });
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto mb-0 mt-8 max-w-lg space-y-4 px-4"
-    >
+    <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-lg space-y-4 px-4">
       {/* Email Input */}
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="email1" value="Your Email" className="text-sm text-white" />
-        </div>
-        <TextInput
+        <label htmlFor="email" className="text-sm text-white mb-2 block">
+          Your Email
+        </label>
+        <input
           type="email"
-          className="w-full rounded-lg border-gray-200 text-sm shadow-sm text-black"
+          id="email"
+          className="w-full rounded-lg border-gray-200 p-2 text-sm shadow-sm text-black"
           placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          icon={FiMail}
+          required
         />
       </div>
 
       {/* Password Input */}
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="password" value="Your Password" className="text-sm text-white" />
-        </div>
+        <label htmlFor="password" className="text-sm text-white mb-2 block">
+          Your Password
+        </label>
         <div className="relative">
-          <TextInput
+          <input
             type={showPassword ? "text" : "password"}
-            className="w-full rounded-lg border-gray-200 text-sm shadow-sm text-black"
+            id="password"
+            className="w-full rounded-lg border-gray-200 p-2 text-sm shadow-sm text-black"
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <span
-            className="absolute text-gray-500 font-bold right-3 top-3 cursor-pointer"
+          <button
+            type="button"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-blue-500"
             onClick={togglePasswordVisibility}
           >
-            {showPassword ? <FiEyeOff /> : <FiEye />}
-          </span>
+            {showPassword ? "Hide" : "Show"}
+          </button>
         </div>
       </div>
 
@@ -134,10 +109,12 @@ const LoginForm = () => {
       <div>
         <button
           type="submit"
-          className="w-full inline-block rounded-lg bg-blue-500 py-2 text-sm font-medium text-white"
+          className={`w-full bg-blue-500 py-2 text-sm font-medium text-white rounded-lg ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
           disabled={isLoading}
         >
-          {isLoading ? <Loader /> : "Sign In"}
+          {isLoading ? "Loading..." : "Sign In"}
         </button>
       </div>
     </form>

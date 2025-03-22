@@ -1,35 +1,24 @@
 import axios from "axios";
+import { BaseUrl as baseUrl } from "../../config/config";
 
-const BaseUrl = "https://your-base-url.com"; // Replace with actual Base URL
-
-export const GetPUSBCNC = async () => {
+const getWithAuth = async (url, token) => {
   try {
-    const response = await axios.get(`${BaseUrl}/cnc`);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(`${baseUrl}${url}`, { headers });
     return response.data?.data;
   } catch (error) {
     console.error(error.response || error);
-  }
-  return null;
-};
-
-export const GetPUSBCNCById = async (id) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/cnc/${id}`);
-    return response.data?.data[0];
-  } catch (error) {
-    console.error(error.response || error);
     throw error;
   }
 };
 
-export const CreatePUSBCNC = async (data, token) => {
+const sendWithAuth = async (method, url, data, token) => {
   try {
-    const response = await axios.post(`${BaseUrl}/cnc`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const headers = {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+    const response = await axios({ method, url: `${baseUrl}${url}`, data, headers });
     return response;
   } catch (error) {
     console.error(error.response || error);
@@ -37,137 +26,35 @@ export const CreatePUSBCNC = async (data, token) => {
   }
 };
 
-export const UpdatePUSBCNC = async (data, token, id) => {
-  try {
-    const response = await axios.patch(`${BaseUrl}/cnc/${id}`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const getPUSBCNC = async () => getWithAuth("/cnc");
 
-export const ActivatePUSBCNC = async (token, id) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/cnc/${id}/activate`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const getPUSBCNCById = async (id) => getWithAuth(`/cnc/${id}`);
 
-export const DeactivatePUSBCNC = async (token, id) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/cnc/${id}/deactivate`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const createPUSBCNC = async (data, token) => sendWithAuth("post", "/cnc", data, token);
 
-export const GetPUSBCNCWorkplanByCnCId = async (cncId) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/cnc/${cncId}/Workplan`);
-    return response.data?.data;
-  } catch (error) {
-    console.error(error.response || error);
-  }
-  return null;
-};
+export const updatePUSBCNC = async (data, token, id) =>
+  sendWithAuth("patch", `/cnc/${id}`, data, token);
 
-export const GetPUSBCNCWorkplanById = async (cncId, WorkplanId) => {
-  try {
-    const response = await axios.get(
-      `${BaseUrl}/cnc/${cncId}/Workplan/${WorkplanId}`
-    );
-    return response.data?.data[0];
-  } catch (error) {
-    console.error(error.response || error);
-  }
-  return null;
-};
+export const activatePUSBCNC = async (token, id) =>
+  getWithAuth(`/cnc/${id}/activate`, token);
 
-export const CreatePUSBCNCWorkplan = async (data, token, cncId) => {
-  try {
-    const response = await axios.post(
-      `${BaseUrl}/cnc/${cncId}/Workplan`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const deactivatePUSBCNC = async (token, id) =>
+  getWithAuth(`/cnc/${id}/deactivate`, token);
 
-export const UpdatePUSBCNCWorkplan = async (data, token, cncId, WorkplanId) => {
-  try {
-    const response = await axios.patch(
-      `${BaseUrl}/cnc/${cncId}/Workplan/${WorkplanId}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const getPUSBCNCWorkplanByCnCId = async (cncId) =>
+  getWithAuth(`/cnc/${cncId}/Workplan`);
 
-export const ActivatePUSBCNCWorkplan = async (token, cncId, WorkplanId) => {
-  try {
-    const response = await axios.get(
-      `${BaseUrl}/cnc/${cncId}/Workplan/${WorkplanId}/activate`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const getPUSBCNCWorkplanById = async (cncId, workplanId) =>
+  getWithAuth(`/cnc/${cncId}/Workplan/${workplanId}`);
 
-export const DeactivatePUSBCNCWorkplan = async (token, cncId, WorkplanId) => {
-  try {
-    const response = await axios.get(
-      `${BaseUrl}/cnc/${cncId}/Workplan/${WorkplanId}/deactivate`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error(error.response || error);
-    throw error;
-  }
-};
+export const createPUSBCNCWorkplan = async (data, token, cncId) =>
+  sendWithAuth("post", `/cnc/${cncId}/Workplan`, data, token);
+
+export const updatePUSBCNCWorkplan = async (data, token, cncId, workplanId) =>
+  sendWithAuth("patch", `/cnc/${cncId}/Workplan/${workplanId}`, data, token);
+
+export const activatePUSBCNCWorkplan = async (token, cncId, workplanId) =>
+  getWithAuth(`/cnc/${cncId}/Workplan/${workplanId}/activate`, token);
+
+export const deactivatePUSBCNCWorkplan = async (token, cncId, workplanId) =>
+  getWithAuth(`/cnc/${cncId}/Workplan/${workplanId}/deactivate`, token);

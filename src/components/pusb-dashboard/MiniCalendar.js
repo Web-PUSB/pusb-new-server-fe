@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import Card from "../../components/shared/Card"; // Adjust import path
-import "react-calendar/dist/Calendar.css";
+import Card from "../../components/shared/Card"; 
+import 'react-calendar/dist/Calendar.css';
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import "../../styles/MiniCalendar.css"; // Adjust import path
-import { GetPUSBEvent } from "../../api/pusb-events"; // Adjust import path
-import SelectDateAlert from "../../lib/SelectDateAlert"; // Adjust import path
+import "../../styles/MiniCalendar.css"; 
+import { GetPUSBEvent } from "../../pages/api/pusb-events"; 
+import SelectDateAlert from "../../lib/SelectDateAlert"; 
 
 const isSameDay = (date1, date2) => {
   return (

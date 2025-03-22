@@ -1,10 +1,10 @@
-import flowbite from "flowbite-react/tailwind";
+const flowbite = require("flowbite-react/tailwind");
 
-const config = {
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,jsx,mdx}",
+    "./src/components/**/*.{js,jsx,mdx}",
+    "./src/app/**/*.{js,jsx,mdx}",
     flowbite.content(),
   ],
   theme: {
@@ -17,15 +17,13 @@ const config = {
       keyframes: {
         "bounce-custom": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" }, // Increase the bounce height
+          "50%": { transform: "translateY(-20px)" },
         },
       },
       animation: {
-        "bounce-custom": "bounce-custom 1s infinite", // Set the animation duration and infinite loop
+        "bounce-custom": "bounce-custom 1s infinite",
       },
     },
   },
   plugins: [flowbite.plugin()],
 };
-
-export default config;

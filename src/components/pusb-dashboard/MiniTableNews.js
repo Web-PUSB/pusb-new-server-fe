@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../../components/shared/Card";
-import { GetPUSBNews } from "../../api/pusb-news"; 
+import { getPUSBNews } from "../../pages/api/pusb-news"; 
 import { formatTimeAgo } from "../../utils/FormatTimeAgo"; 
 
 const MiniTableNews = () => {
@@ -8,7 +8,7 @@ const MiniTableNews = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      const fetchedNews = await GetPUSBNews();
+      const fetchedNews = await getPUSBNews();
       if (fetchedNews) {
         setNews(
           fetchedNews

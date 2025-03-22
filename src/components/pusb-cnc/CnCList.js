@@ -2,6 +2,7 @@ import React, { useMemo, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { FiTrash, FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import ContainerCnCStatus from "./ContainerCnCStatus";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -193,6 +194,22 @@ const CnCList = ({ cncs }) => {
       </div>
     </div>
   );
+};
+
+CnCList.propTypes = {
+  cncs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      short_name: PropTypes.string.isRequired,
+      full_name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      highlight: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      instagram: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default CnCList;

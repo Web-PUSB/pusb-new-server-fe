@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { GetPUSBNews } from "../api/pusb-news"; // Adjust path as needed
+import { getPUSBNews } from "../../../../pages/api/pusb-news";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -19,7 +19,7 @@ const ChartNewsByCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const news = await GetPUSBNews();
+        const news = await getPUSBNews();
 
         const categoryCounts = {
           "Press Release": Array(12).fill(0),

@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { GetPUSBEvent } from "../api/pusb-events"; // Adjust path as needed
+import { GetPUSBEvent } from "../../../../pages/api/pusb-events"; 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

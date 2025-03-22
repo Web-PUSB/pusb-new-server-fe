@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FileInput, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { CreatePUSBCNC, GetPUSBCNCById, UpdatePUSBCNC } from "../../api/pusb-cnc";
+import { CreatePUSBCNC, getPUSBCNCById, UpdatePUSBCNC } from "../../api/pusb-cnc";
 import SuccessMessageAlert from "../../lib/SuccessMessageAlert";
 import FailedMessageAlert from "../../lib/FailedMessageAlert";
 import Loader from "../../shared/Loader";
@@ -33,7 +33,7 @@ const FormCnC = ({ isEditMode, id }) => {
       if (isEditMode && id) {
         try {
           setIsLoading(true);
-          const data = await GetPUSBCNCById(id);
+          const data = await getPUSBCNCById(id);
           if (data) {
             setFormCncData({
               short_name: data.short_name || "",

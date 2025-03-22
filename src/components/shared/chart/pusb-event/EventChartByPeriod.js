@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { GetPUSBEvent } from "../api/pusb-events"; // Adjust the path based on your project structure
+import { GetPUSBEvent } from "../../../../pages/api/pusb-events";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

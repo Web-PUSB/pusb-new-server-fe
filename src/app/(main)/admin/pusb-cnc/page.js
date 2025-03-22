@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Widget from "../../../../components/pusb-dashboard/Widget";
 import { IoDocuments } from "react-icons/io5";
 import { MdBarChart, MdDashboard } from "react-icons/md";
-import { GetPUSBCNC } from "../../../../pages/api/pusb-cnc";
+import { getPUSBCNC } from "../../../../pages/api/pusb-cnc";
 import ContainerCnCList from "../../../../components/pusb-cnc/ContainerCnCList";
 
 const Page = () => {
@@ -12,7 +12,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await GetPUSBCNC();
+        const data = await getPUSBCNC();
         setCncs(data);
       } catch (err) {
         setError("Failed to load CnC data. Please try again later.");

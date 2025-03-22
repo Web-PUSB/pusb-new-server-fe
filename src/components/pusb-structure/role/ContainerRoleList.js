@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FiPlus } from "react-icons/fi";
 import RoleList from "./RoleList";
 
@@ -20,6 +21,10 @@ const ContainerRoleList = ({ token }) => {
       <RoleList token={token} />
     </>
   );
+};
+
+ContainerRoleList.propTypes = {
+  token: PropTypes.string.isRequired,
 };
 
 export default ContainerRoleList;
