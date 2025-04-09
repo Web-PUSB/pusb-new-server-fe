@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  pusb-admin:
+    build: .
+    container_name: pusb-admin
+    stdin_open: true
+    tty: true
+    volumes:
+      - "/app/node_modules"
+      - ".:/app"
+    ports:
+      - "3001:80"
