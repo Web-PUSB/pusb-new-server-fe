@@ -7,9 +7,13 @@ const Page = () => {
   const navigate = useNavigate();
   const { login } = useSession();
 
-  const handleLogin = () => {
-    login(); 
-    navigate("/pusb"); 
+  const handleLogin = (username, password) => {
+    if (username === "admin@gmail.com" && password === "password") {
+      login();
+      navigate("/admin/pusb");
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ContainerEvent from "../../components/pusb-event/ContainerEvent";
-import { GetPUSBEventById, GetPUSBEventTimeline } from "../../api/pusb-events";
+import { getPUSBEventById, getPUSBEventTimeline } from "../../api/pusb-events";
 
 const Page = () => {
   const { id } = useParams();
@@ -12,8 +12,8 @@ const Page = () => {
   useEffect(() => {
     const fetchEventData = async () => {
       try {
-        const fetchedEvent = await GetPUSBEventById(id);
-        const fetchedEventTimeline = await GetPUSBEventTimeline(id);
+        const fetchedEvent = await getPUSBEventById(id);
+        const fetchedEventTimeline = await getPUSBEventTimeline(id);
 
         if (!fetchedEvent || !fetchedEventTimeline) {
           throw new Error("Failed to fetch event data.");

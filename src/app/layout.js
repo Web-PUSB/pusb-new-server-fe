@@ -1,21 +1,19 @@
 import React from "react";
-import { Helmet } from "react-helmet";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Provider from "@/src/provider/Provider";
+import "../styles/globals.css";
+import Provider from "../provider/Provider";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function RootLayout({ children }) {
+const Layout = ({ children }) => {
   return (
-    <html lang="en">
-      <Helmet>
+    <>
+      <head>
         <title>PUSB Admin - President University Student Board</title>
         <meta name="description" content="PUSB ADMIN" />
-      </Helmet>
-      <body className={inter.className}>
+      </head>
+      <body>
         <Provider>{children}</Provider>
       </body>
-    </html>
+    </>
   );
-}
+};
+
+export default Layout;

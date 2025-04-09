@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "../../../components/Header";
 import Sidebar from "../../../components/Sidebar";
 import Footer from "../../../components/Footer";
@@ -25,6 +26,10 @@ const NavigationProvider = ({ children }) => {
       </div>
     </>
   );
+};
+
+NavigationProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default NavigationProvider;

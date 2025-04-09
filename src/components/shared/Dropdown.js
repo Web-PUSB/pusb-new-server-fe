@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 
 function useOutsideAlerter(ref, setX) {
   useEffect(() => {
@@ -42,6 +43,13 @@ const Dropdown = ({ button, children, classNames, animation }) => {
       </div>
     </div>
   );
+};
+
+Dropdown.propTypes = {
+  button: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+  classNames: PropTypes.string,
+  animation: PropTypes.string,
 };
 
 export default Dropdown;

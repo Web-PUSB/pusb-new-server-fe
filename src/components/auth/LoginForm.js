@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSession } from "../../context/sessionContext"; 
+import { useSession } from "../../context/sessionContext";
+import { FiMail, FiEye, FiEyeOff } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const LoginForm = () => {
@@ -10,7 +11,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useSession(); 
+  const { login } = useSession(); 
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -22,7 +23,7 @@ const LoginForm = () => {
 
     try {
       if (email === "admin@gmail.com" && password === "password") {
-        setIsAuthenticated(true);
+        login(); 
 
         Swal.fire({
           title: "Success",
@@ -34,7 +35,7 @@ const LoginForm = () => {
           showConfirmButton: false,
         });
 
-        navigate("/");
+        navigate("/admin/pusb"); 
       } else {
         Swal.fire({
           title: "Invalid Login",
@@ -63,24 +64,28 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-lg space-y-4 px-4">
-      {/* Email Input */}
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto mt-8 max-w-lg space-y-4 px-4"
+    >
       <div>
         <label htmlFor="email" className="text-sm text-white mb-2 block">
           Your Email
         </label>
-        <input
-          type="email"
-          id="email"
-          className="w-full rounded-lg border-gray-200 p-2 text-sm shadow-sm text-black"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className="relative">
+          <input
+            type="email"
+            id="email"
+            className="w-full rounded-lg border-gray-200 p-2 text-sm shadow-sm text-black"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <FiMail className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
+        </div>
       </div>
 
-      {/* Password Input */}
       <div>
         <label htmlFor="password" className="text-sm text-white mb-2 block">
           Your Password
@@ -95,17 +100,15 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
-            type="button"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-blue-500"
+          <span
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
             onClick={togglePasswordVisibility}
           >
-            {showPassword ? "Hide" : "Show"}
-          </button>
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
         </div>
       </div>
 
-      {/* Submit Button */}
       <div>
         <button
           type="submit"

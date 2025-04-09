@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { getPUSBNews } from "../../../../pages/api/pusb-news"; 
+import { getPUSBNews } from "../../../../pages/api/pusb-news";
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +28,8 @@ const ChartNewsByPublished = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const news = await getPUSBNews();
+        const response = await getPUSBNews();        
+        const news = response.data;                 
 
         const monthCounts = Array(12).fill(0);
         const currentYear = new Date().getFullYear();
@@ -54,6 +55,7 @@ const ChartNewsByPublished = () => {
               borderColor: "rgba(75, 192, 192, 1)",
               borderWidth: 2,
               fill: true,
+              tension: 0.4,
             },
           ],
         });
@@ -82,7 +84,7 @@ const ChartNewsByPublished = () => {
             },
             title: {
               display: true,
-              text: "Number of News Items Published Each Month",
+              text: "News Published Each Month (Current Year)",
             },
           },
           scales: {
@@ -98,6 +100,7 @@ const ChartNewsByPublished = () => {
                 text: "Number of News Items",
               },
               beginAtZero: true,
+              precision: 0,
             },
           },
         }}

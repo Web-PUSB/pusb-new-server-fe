@@ -1,76 +1,93 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../components/shared/Card";
-import { getPUSBNews } from "../../pages/api/pusb-news"; 
-import { formatTimeAgo } from "../../utils/FormatTimeAgo"; 
+import axios from "axios";
+
+const formatTimeAgo = (dateString) => {
+  const date = new Date(dateString);
+  const seconds = Math.floor((new Date() - date) / 1000);
+
+  const intervals = {
+    year: 31536000,
+    month: 2592000,
+    week: 604800,
+    day: 86400,
+    hour: 3600,
+    minute: 60,
+  };
+
+  for (const [unit, value] of Object.entries(intervals)) {
+    const interval = Math.floor(seconds / value);
+    if (interval > 1) return `${interval} ${unit}s ago`;
+    if (interval === 1) return `1 ${unit} ago`;
+  }
+
+  return "just now";
+};
 
 const MiniTableNews = () => {
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchNews = async () => {
+    try {
+      const response = await axios.get("https://api.pusb.or.id/v1/news");
+      const { data } = response.data;
+  
+      const filteredAndSorted = (data || [])
+        .filter((item) => new Date(item.publish_date) <= new Date())
+        .sort(
+          (a, b) =>
+            new Date(b.publish_date).getTime() -
+            new Date(a.publish_date).getTime()
+        )
+        .slice(0, 5);
+  
+      setNews(filteredAndSorted);
+    } catch (error) {
+      console.error("Failed to fetch news:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   useEffect(() => {
-    const fetchNews = async () => {
-      const fetchedNews = await getPUSBNews();
-      if (fetchedNews) {
-        setNews(
-          fetchedNews
-            .filter((item) => new Date(item.publish_date) <= new Date())
-            .sort(
-              (a, b) =>
-                new Date(b.publish_date).getTime() -
-                new Date(a.publish_date).getTime()
-            )
-            .slice(0, 5)
-        );
-      }
-    };
-
     fetchNews();
   }, []);
 
+  if (loading) return <p>Loading news...</p>;
+
   if (!news || news.length === 0) {
     return (
-      <Card extra="flex w-full h-full flex-col justify-center items-center px-3 py-3 text-black">
+      <div className="card center">
         <p>No news available</p>
-      </Card>
+      </div>
     );
   }
 
   return (
-    <Card extra="flex w-full h-full flex-col justify-center items-center px-3 py-3 text-black overflow-x-auto">
-      <div className="w-full px-2 py-3">
-        <h2 className="text-xl font-bold">Latest news...</h2>
+    <div className="card scrollable">
+      <div className="header">
+        <h2>Latest news...</h2>
       </div>
-      <table className="min-w-full h-full divide-y-2 divide-gray-200 bg-white text-sm">
-        <thead className="ltr:text-left rtl:text-right">
+      <table className="news-table">
+        <thead>
           <tr>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Title
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Category
-            </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Issued At
-            </th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Issued At</th>
           </tr>
         </thead>
-
-        <tbody className="divide-y divide-gray-200">
+        <tbody>
           {news.map((item) => (
             <tr key={item.id}>
-              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {item.title}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {item.category}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {formatTimeAgo(item.publish_date)}
-              </td>
+              <td>{item.title}</td>
+              <td>{item.category}</td>
+              <td>{formatTimeAgo(item.publish_date)}</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </Card>
+    </div>
   );
 };
 

@@ -1,10 +1,15 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import NavigationProvider from "./NavigationProvider";
 
-export default function AdminLayout({ children }) {
+const AdminLayout = () => {
   return (
-    <div className="flex h-full w-full">
-      <NavigationProvider>{children}</NavigationProvider>
+    <div className="admin-layout">
+      <NavigationProvider>
+        <Outlet /> 
+      </NavigationProvider>
     </div>
   );
-}
+};
+
+export default AdminLayout;

@@ -19,7 +19,7 @@ const ChartNewsByCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const news = await getPUSBNews();
+        const { data: news } = await getPUSBNews(); 
 
         const categoryCounts = {
           "Press Release": Array(12).fill(0),
@@ -48,13 +48,13 @@ const ChartNewsByCategory = () => {
         const datasets = Object.keys(categoryCounts).map((category, index) => ({
           label: category,
           data: categoryCounts[category].reduce((acc, count, i) => {
-            acc.push((acc[i - 1] || 0) + count);
+            acc.push((acc[i - 1] || 0) + count); 
             return acc;
           }, []),
           backgroundColor: [
-            "rgba(75, 192, 192, 0.6)", // Teal
-            "rgba(255, 159, 64, 0.6)", // Orange
-            "rgba(153, 102, 255, 0.6)", // Purple
+            "rgba(75, 192, 192, 0.6)", 
+            "rgba(255, 159, 64, 0.6)", 
+            "rgba(153, 102, 255, 0.6)",
           ][index],
           borderColor: [
             "rgba(75, 192, 192, 1)",

@@ -16,10 +16,8 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.js",
     "**/*.jsx",
-    ".next/types/**/*.ts",
     "src/config/config.js",
     "tailwind.config.js",
     "src/routes.js",

@@ -1,85 +1,87 @@
 import React, { useState, useEffect } from 'react';
 
 const FormEvent = ({ isEditMode, id }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [status, setStatus] = useState('');
-  const [audience, setAudience] = useState('');
-  const [period, setPeriod] = useState('');
-  const [ministry, setMinistry] = useState('1');
-  const [participantLink, setParticipantLink] = useState('');
-  const [recruitmentLink, setRecruitmentLink] = useState('');
-  const [audienceLink, setAudienceLink] = useState('');
-  const [thumbnail, setThumbnail] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+    status: '',
+    audience: '',
+    period: '',
+    participantLink: '',
+    recruitmentLink: '',
+    audienceLink: '',
+    thumbnail: null,
+  });
   const [preview, setPreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchEventData = async () => {
-      if (isEditMode && id) {
+    if (isEditMode && id) {
+      const fetchEventData = async () => {
         try {
           const response = await fetch(`/api/pusb-events/${id}`);
+          if (!response.ok) throw new Error('Failed to load event data');
           const data = await response.json();
-          setName(data.name);
-          setDescription(data.description);
-          setStartDate(data.start_date ? data.start_date.slice(0, 10) : '');
-          setEndDate(data.end_date ? data.end_date.slice(0, 10) : '');
-          setStatus(data.status);
-          setAudience(data.audience);
-          setPeriod(data.period);
-          setMinistry('1');
-          setParticipantLink(data.participant_link);
-          setRecruitmentLink(data.recruitment_link);
-          setAudienceLink(data.audience_link);
-          if (data.thumbnail) {
-            setPreview(data.thumbnail);
-          }
-        } catch (error) {
-          alert('Failed to load event data.');
-          console.error(error);
-        }
-      }
-    };
 
-    fetchEventData();
+          setFormData({
+            name: data.name || '',
+            description: data.description || '',
+            startDate: data.start_date ? data.start_date.slice(0, 10) : '',
+            endDate: data.end_date ? data.end_date.slice(0, 10) : '',
+            status: data.status || '',
+            audience: data.audience || '',
+            period: data.period || '',
+            participantLink: data.participant_link || '',
+            recruitmentLink: data.recruitment_link || '',
+            audienceLink: data.audience_link || '',
+            thumbnail: null,
+          });
+          if (data.thumbnail) setPreview(data.thumbnail);
+        } catch (error) {
+          console.error(error);
+          alert('Failed to load event data.');
+        }
+      };
+
+      fetchEventData();
+    }
   }, [isEditMode, id]);
+
+  const handleChange = (e) => {
+    const { id, value, files } = e.target;
+    if (files) {
+      const file = files[0];
+      setFormData((prev) => ({ ...prev, thumbnail: file }));
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setFormData((prev) => ({ ...prev, [id]: value }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
+    const { startDate, endDate } = formData;
     if (startDate && endDate && startDate > endDate) {
       alert('End date must be after the start date');
       setIsLoading(false);
       return;
     }
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('ministry_id', ministry);
-    formData.append('description', description);
-    formData.append('start_date', startDate);
-    formData.append('end_date', endDate);
-    formData.append('status', status);
-    formData.append('audience', audience);
-    formData.append('period', period);
-    formData.append('participant_link', participantLink);
-    formData.append('recruitment_link', recruitmentLink);
-    formData.append('audience_link', audienceLink);
-    if (thumbnail) {
-      formData.append('thumbnail', thumbnail);
-    }
+    const data = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== null) data.append(key, value);
+    });
+    data.append('ministry_id', '1');
 
     try {
       const url = isEditMode ? `/api/pusb-events/${id}` : '/api/pusb-events';
       const method = isEditMode ? 'PUT' : 'POST';
 
-      const response = await fetch(url, {
-        method,
-        body: formData,
-      });
+      const response = await fetch(url, { method, body: data });
 
       if (response.ok) {
         alert(isEditMode ? 'Event updated successfully!' : 'Event created successfully!');
@@ -88,21 +90,10 @@ const FormEvent = ({ isEditMode, id }) => {
         alert('Failed to save event data.');
       }
     } catch (error) {
-      alert('An error occurred while saving data.');
       console.error(error);
+      alert('An error occurred while saving data.');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
-    setThumbnail(file);
-
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    } else {
-      setPreview(null);
     }
   };
 
@@ -115,8 +106,8 @@ const FormEvent = ({ isEditMode, id }) => {
           id="name"
           type="text"
           placeholder="Enter the event name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formData.name}
+          onChange={handleChange}
           required
         />
       </div>
@@ -127,30 +118,30 @@ const FormEvent = ({ isEditMode, id }) => {
         <textarea
           id="description"
           placeholder="Enter event description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formData.description}
+          onChange={handleChange}
           required
         />
       </div>
 
       {/* Start Date & End Date */}
       <div>
-        <label htmlFor="start_date">Start Date</label>
+        <label htmlFor="startDate">Start Date</label>
         <input
-          id="start_date"
+          id="startDate"
           type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          value={formData.startDate}
+          onChange={handleChange}
           required
         />
       </div>
       <div>
-        <label htmlFor="end_date">End Date</label>
+        <label htmlFor="endDate">End Date</label>
         <input
-          id="end_date"
+          id="endDate"
           type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          value={formData.endDate}
+          onChange={handleChange}
           required
         />
       </div>
@@ -158,7 +149,7 @@ const FormEvent = ({ isEditMode, id }) => {
       {/* Status */}
       <div>
         <label htmlFor="status">Event Status</label>
-        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
+        <select id="status" value={formData.status} onChange={handleChange} required>
           <option value="">Select Status</option>
           <option value="PRESENT">Ongoing</option>
           <option value="SOON">Upcoming</option>
@@ -166,14 +157,50 @@ const FormEvent = ({ isEditMode, id }) => {
         </select>
       </div>
 
+      {/* Audience */}
+      <div>
+        <label htmlFor="audience">Audience</label>
+        <input
+          id="audience"
+          type="text"
+          value={formData.audience}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
       {/* Participant Link */}
       <div>
-        <label htmlFor="participant_link">Participant Link</label>
+        <label htmlFor="participantLink">Participant Link</label>
         <input
-          id="participant_link"
+          id="participantLink"
           type="text"
-          value={participantLink}
-          onChange={(e) => setParticipantLink(e.target.value)}
+          value={formData.participantLink}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      {/* Recruitment Link */}
+      <div>
+        <label htmlFor="recruitmentLink">Recruitment Link</label>
+        <input
+          id="recruitmentLink"
+          type="text"
+          value={formData.recruitmentLink}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      {/* Audience Link */}
+      <div>
+        <label htmlFor="audienceLink">Audience Link</label>
+        <input
+          id="audienceLink"
+          type="text"
+          value={formData.audienceLink}
+          onChange={handleChange}
           required
         />
       </div>
@@ -181,7 +208,7 @@ const FormEvent = ({ isEditMode, id }) => {
       {/* Thumbnail Upload */}
       <div>
         <label htmlFor="thumbnail">Event Thumbnail</label>
-        <input id="thumbnail" type="file" onChange={handleThumbnailChange} />
+        <input id="thumbnail" type="file" onChange={handleChange} />
         {preview && <img src={preview} alt="Preview" width={100} height={100} />}
       </div>
 

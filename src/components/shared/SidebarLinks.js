@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { MdDashboard } from "react-icons/md";
+import PropTypes from "prop-types";
 
 const SidebarLinks = ({ routes }) => {
   const pathname = window.location.pathname || "";
@@ -52,6 +53,16 @@ const SidebarLinks = ({ routes }) => {
   };
 
   return <ul>{createLinks(routes)}</ul>;
+};
+
+SidebarLinks.propTypes = {
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.element, 
+    })
+  ).isRequired,
 };
 
 export default SidebarLinks;

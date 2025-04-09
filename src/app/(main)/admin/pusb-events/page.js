@@ -3,7 +3,7 @@ import Widget from "../../../../components/pusb-dashboard/Widget";
 import { IoDocuments } from "react-icons/io5";
 import { MdBarChart, MdDashboard } from "react-icons/md";
 import ContainerEventList from "../../../../components/pusb-event/ContainerEventList";
-import { GetPUSBEvent } from "../../../../pages/api/pusb-events";
+import { getPUSBEvent } from "../../../../pages/api/pusb-events";
 
 const Page = () => {
   const [events, setEvents] = useState([]);
@@ -12,7 +12,7 @@ const Page = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const data = await GetPUSBEvent();
+        const data = await getPUSBEvent();
         setEvents(data);
       } catch (error) {
         console.error("Failed to fetch events:", error);

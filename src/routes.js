@@ -21,7 +21,7 @@ const routes = [
   {
     name: "PUSB Profile",
     path: "pusb-profile",
-    icon: <MdOutlineShoppingCart className="h-6 w-6" />,
+    icon: <MdPerson className="h-6 w-6" />,
   },
   {
     name: "PUSB CnC",

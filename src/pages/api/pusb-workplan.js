@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const BaseUrl = 'https://your-api-base-url.com';
-
+import { BaseUrl } from "../../config/config";
 export const getPUSBWorkplan = async () => {
   try {
     const response = await axios.get(`${BaseUrl}/workplan`);
@@ -82,7 +80,6 @@ export const deletePUSBWorkplan = async (id) => {
   }
 };
 
-// Workplan Category
 export const getPUSBWorkplanCategory = async () => {
   try {
     const response = await axios.get(`${BaseUrl}/workplan_category`);

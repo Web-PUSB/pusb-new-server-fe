@@ -1,10 +1,10 @@
 import axios from "axios";
-import { BaseUrl as baseUrl } from "../../config/config";
+import { BaseUrl } from "../../config/config";
 
 const getWithAuth = async (url, token) => {
   try {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const response = await axios.get(`${baseUrl}${url}`, { headers });
+    const response = await axios.get(`${BaseUrl}${url}`, { headers });
     return response.data?.data;
   } catch (error) {
     console.error(error.response || error);
@@ -18,7 +18,7 @@ const sendWithAuth = async (method, url, data, token) => {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
-    const response = await axios({ method, url: `${baseUrl}${url}`, data, headers });
+    const response = await axios({ method, url: `${BaseUrl}${url}`, data, headers });
     return response;
   } catch (error) {
     console.error(error.response || error);

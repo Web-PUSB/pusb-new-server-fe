@@ -4,7 +4,7 @@ import Card from "../../components/shared/Card";
 import 'react-calendar/dist/Calendar.css';
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import "../../styles/MiniCalendar.css"; 
-import { GetPUSBEvent } from "../../pages/api/pusb-events"; 
+import { getPUSBEvent } from "../../pages/api/pusb-events"; 
 import SelectDateAlert from "../../lib/SelectDateAlert"; 
 
 const isSameDay = (date1, date2) => {
@@ -16,7 +16,7 @@ const isSameDay = (date1, date2) => {
 };
 
 const MiniCalendar = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]); 
   const [value, setValue] = useState(new Date());
 
   useEffect(() => {
@@ -25,15 +25,20 @@ const MiniCalendar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const events = await GetPUSBEvent();
-      setEvents(events);
+      try {
+        const fetchedEvents = await getPUSBEvent();
+        setEvents(fetchedEvents || []); 
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+        setEvents([]); 
+      }
     };
 
     fetchData();
   }, []);
 
   const renderEventMarker = ({ date, view }) => {
-    if (view === "month") {
+    if (view === "month" && events?.length) {
       const eventsForDay = events.filter((event) => {
         const eventStartDate = new Date(event.start_date);
         const eventEndDate = new Date(event.end_date);
@@ -52,7 +57,7 @@ const MiniCalendar = () => {
                 margin: "auto",
                 marginTop: "2px",
               }}
-            ></div>
+            />
           </div>
         );
       }
@@ -72,11 +77,11 @@ const MiniCalendar = () => {
         day: "numeric",
       });
 
-      const eventsForDay = events.filter((event) => {
+      const eventsForDay = events?.filter((event) => {
         const eventStartDate = new Date(event.start_date);
         const eventEndDate = new Date(event.end_date);
         return isSameDay(selectedDate, eventStartDate) || isSameDay(selectedDate, eventEndDate);
-      });
+      }) || [];
 
       const eventDetailsList = eventsForDay
         .map((event) => {

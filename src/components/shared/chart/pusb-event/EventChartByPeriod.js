@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { GetPUSBEvent } from "../../../../pages/api/pusb-events";
+import { getPUSBEvent } from "../../../../pages/api/pusb-events";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -12,7 +12,7 @@ const EventChartByPeriod = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const events = await GetPUSBEvent();
+        const { data: events } = await getPUSBEvent(); 
         setEventsNumber(events.length);
 
         const periodCounts = {

@@ -25,8 +25,4 @@ Widget.propTypes = {
   subtitle: PropTypes.string,
 };
 
-Widget.defaultProps = {
-  subtitle: "", 
-};
-
 export default Widget;

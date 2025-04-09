@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BaseUrl = 'https://your-api-base-url.com';
+import { BaseUrl } from "../../config/config";
 
 export const getPUSBProfile = async () => {
   try {

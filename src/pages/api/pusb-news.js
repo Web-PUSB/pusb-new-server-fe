@@ -1,83 +1,14 @@
 import axios from 'axios';
 
-const BaseUrl = 'https://your-api-base-url.com';
+const BASE_URL = "https://api.pusb.or.id/v1";
 
 export const getPUSBNews = async () => {
   try {
-    const response = await axios.get(`${BaseUrl}/news`);
-    return response.data?.data;
+    const response = await axios.get(`${BASE_URL}/news`);
+    console.log("Response:", response.data);
+    return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error.response);
-    } else {
-      console.log(error);
-    }
-  }
-  return null;
-};
-
-export const getPUSBNewsBySlug = async (slug) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/news/${slug}`);
-    return response.data?.data[0];
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error.response);
-    } else {
-      console.log(error);
-    }
-    throw error;
-  }
-};
-
-export const getPUSBNewsById = async (id) => {
-  try {
-    const response = await axios.get(`${BaseUrl}/news/${id}`);
-    return response.data?.data[0];
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error.response);
-    } else {
-      console.log(error);
-    }
-    throw error;
-  }
-};
-
-export const createPUSBNews = async (data, token) => {
-  try {
-    const response = await axios.post(`${BaseUrl}/news`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error.response);
-    } else {
-      console.log(error);
-    }
-    throw error;
-  }
-};
-
-export const updatePUSBNews = async (data, token, id) => {
-  try {
-    const response = await axios.patch(`${BaseUrl}/news/${id}`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error.response);
-    } else {
-      console.log(error);
-    }
+    console.error("Axios Error:", error);
     throw error;
   }
 };

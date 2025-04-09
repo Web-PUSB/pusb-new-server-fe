@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -26,92 +32,52 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* custom-ag-grid.css */
+
+/* Set the background color for the header row */
+.ag-header {
+  background-color: #f7fafc; /* Tailwind's bg-gray-100 */
+  border-bottom: none; /* Remove bottom border */
+}
+
+/* Remove all borders from the grid */
+.ag-theme-alpine .ag-root-wrapper,
+.ag-theme-alpine .ag-header,
+.ag-theme-alpine .ag-body-viewport,
+.ag-theme-alpine .ag-body-container,
+.ag-theme-alpine .ag-row {
+  border: none;
+}
+
+/* Add border radius to the grid */
+.ag-theme-alpine {
+  border-radius: 8px; /* Adjust the radius as needed */
+  overflow: hidden; /* Prevent overflow on rounded corners */
+}
+
+/* Optional: Style the grid rows or cells as needed */
+.ag-theme-alpine .ag-row,
+.ag-theme-alpine .ag-cell {
+  border: none; /* Ensures no borders are visible */
+}
+/* From Uiverse.io by gagan-gv */
+.loader span {
+  font-size: 100px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 600;
+  animation: blur 3s linear infinite;
+  line-height: 20px;
+  transition: all 0.5s;
+  letter-spacing: 0.2em;
+}
+
+@keyframes blur {
+  0%,
+  90% {
+    filter: blur(0);
   }
-}
 
-/* styles.css or a similar global stylesheet */
-
-/* Define base styles for smaller screens */
-.card-logo-shape,
-.card-logo-color {
-  position: absolute;
-}
-
-/* Media queries for larger screens */
-@media (min-width: 1024px) {
-  .card-logo-shape-left-64 {
-    left: 64px;
+  50% {
+    filter: blur(10px);
   }
-  .card-logo-shape-left-144 {
-    left: 144px;
-  }
-  .card-logo-shape-left-192 {
-    left: 192px;
-  }
-
-  .card-logo-color-right--64 {
-    right: -64px;
-  }
-  .card-logo-color-right-0 {
-    right: 0;
-  }
-  .card-logo-color-right-44 {
-    right: 44px;
-  }
-}
-
-/* Customize the scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 10px;
-  border-radius: 12px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: white;
-  margin-left: 1rem;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #b4b7c4;
-  border-radius: 12px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #292f3b;
-}
-
-.scrollbar-timeline {
-  overflow-y: hidden;
-  overflow-x: auto;
-}
-
-/* Custom scrollbar styles for scrollbar-timeline */
-.scrollbar-timeline::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-/* Scrollbar Track */
-.scrollbar-timeline::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  border-radius: 12px;
-  margin: 4px;
-}
-
-/* Scrollbar Thumb */
-.scrollbar-timeline::-webkit-scrollbar-thumb {
-  background-color: #b4b7c4;
-  border-radius: 12px;
-}
-
-/* Thumb on Hover */
-.scrollbar-timeline::-webkit-scrollbar-thumb:hover {
-  background-color: #292f3b;
 }
