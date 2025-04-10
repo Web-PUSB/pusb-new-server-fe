@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FileInput, Label, TextInput, Textarea } from "flowbite-react";
-import AccessRestricted from "../components/AccessRestricted";
-import { CreatePUSBProfile, GetPUSBProfile } from "../api/pusb-profile";
+import { CreatePUSBProfile, getPUSBProfile } from "../../../pages/api/pusb-profile";
 
 const FormProfile = ({ isEditMode }) => {
   const [profileData, setProfileData] = useState({
@@ -25,7 +24,6 @@ const FormProfile = ({ isEditMode }) => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    // Simulate user session check (Replace with actual auth logic)
     const userSession = localStorage.getItem("userSession");
     if (userSession) {
       setSession(JSON.parse(userSession));
@@ -36,7 +34,7 @@ const FormProfile = ({ isEditMode }) => {
     if (isEditMode) {
       const fetchProfileData = async () => {
         try {
-          const data = await GetPUSBProfile();
+          const data = await getPUSBProfile();
           if (data) {
             setProfileData({
               ...profileData,

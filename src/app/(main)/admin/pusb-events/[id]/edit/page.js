@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import FormEvent from "../../components/pusb-event/form/FormEvent";
+import FormEvent from "../../../../../../components/pusb-event/form/FormEvent";
 
 const Page = () => {
   const { id } = useParams();

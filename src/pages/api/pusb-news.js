@@ -1,14 +1,69 @@
-import axios from 'axios';
+import axios from "axios";
+import { BaseUrl } from "../../config/config";
 
-const BASE_URL = "https://api.pusb.or.id/v1";
 
 export const getPUSBNews = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/news`);
-    console.log("Response:", response.data);
-    return response.data;
+    const response = await axios.get(`${BaseUrl}/news`);
+    console.log("Response from API:", response);
+    if (response.data && Array.isArray(response.data.data)) {
+      return response.data.data;
+    } else {
+      console.warn("Unexpected API format:", response.data);
+      return [];
+    }
   } catch (error) {
-    console.error("Axios Error:", error);
+    console.error("Error fetching PUSB news:", error.response || error);
+    return [];
+  }
+};
+
+export const GetPUSBNewsBySlug = async (slug) => {
+  try {
+    const response = await axios.get(`${BaseUrl}/news/${slug}`);
+    return response.data?.data[0];
+  } catch (error) {
+    console.log(error.response || error);
+    throw error;
+  }
+};
+
+export const GetPUSBNewsById = async (id) => {
+  try {
+    const response = await axios.get(`${BaseUrl}/news/${id}`);
+    return response.data?.data[0];
+  } catch (error) {
+    console.log(error.response || error);
+    throw error;
+  }
+};
+
+export const CreatePUSBNews = async (data, token) => {
+  try {
+    const response = await axios.post(`${BaseUrl}/news`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.response || error);
+    throw error;
+  }
+};
+
+export const UpdatePUSBNews = async (data, token, id) => {
+  try {
+    const response = await axios.patch(`${BaseUrl}/news/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error.response || error);
     throw error;
   }
 };

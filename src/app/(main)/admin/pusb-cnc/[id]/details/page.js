@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ContainerCnC from "../components/pusb-cnc/ContainerCnC";
+import PropTypes from "prop-types"; 
+import ContainerCnC from "../../../../../../components/pusb-cnc/ContainerCnC";
 
 const Page = ({ match }) => {
   const [cnc, setCnc] = useState(null);
@@ -28,6 +29,14 @@ const Page = ({ match }) => {
       {cnc ? <ContainerCnC cnc={cnc} /> : <p>Loading...</p>}
     </div>
   );
+};
+
+Page.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Page;

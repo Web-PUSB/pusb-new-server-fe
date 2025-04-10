@@ -30,9 +30,9 @@ export const getPUSBCNC = async () => getWithAuth("/cnc");
 
 export const getPUSBCNCById = async (id) => getWithAuth(`/cnc/${id}`);
 
-export const createPUSBCNC = async (data, token) => sendWithAuth("post", "/cnc", data, token);
+export const CreatePUSBCNC = async (data, token) => sendWithAuth("post", "/cnc", data, token);
 
-export const updatePUSBCNC = async (data, token, id) =>
+export const UpdatePUSBCNC = async (data, token, id) =>
   sendWithAuth("patch", `/cnc/${id}`, data, token);
 
 export const activatePUSBCNC = async (token, id) =>

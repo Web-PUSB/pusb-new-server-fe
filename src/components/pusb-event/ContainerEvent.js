@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "flowbite-react";
 import { FiEdit } from "react-icons/fi";
-import { formatTime } from "../utils/FormatTime"; // Adjust the path as needed
+import { formatTime } from "../../utils/FormatTime"; 
 import ContainerEventTimelineList from "./timeline/ContainerEventTimelineList";
 
 const ContainerEvent = ({ event, eventId, eventTimeline }) => {

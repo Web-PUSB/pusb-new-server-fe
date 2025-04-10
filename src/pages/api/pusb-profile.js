@@ -16,7 +16,7 @@ export const getPUSBProfile = async () => {
   return null;
 };
 
-export const createPUSBProfile = async (data, token) => {
+export const CreatePUSBProfile = async (data, token) => {
   try {
     const response = await axios.post(`${BaseUrl}/profile`, data, {
       headers: {

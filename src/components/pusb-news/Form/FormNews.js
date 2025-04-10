@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { FileInput, Label, TextInput, Select, Textarea } from "flowbite-react";
 import Loader from "../../shared/Loader";
-import { CreatePUSBNews, GetPUSBNewsBySlug, UpdatePUSBNews } from "../../api/pusb-news";
-import SuccessMessageAlert from "../../lib/SuccessMessageAlert";
-import FailedMessageAlert from "../../lib/FailedMessageAlert";
+import { CreatePUSBNews, GetPUSBNewsBySlug, UpdatePUSBNews } from "../../../pages/api/pusb-news";
+import SuccessMessageAlert from "../../../lib/SuccessMessageAlert";
+import FailedMessageAlert from "../../../lib/FailedMessageAlert";
 
 const FormNews = ({ isEditMode, slug }) => {
   const [news, setNews] = useState(null);

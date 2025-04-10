@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ContainerEvent from "../../components/pusb-event/ContainerEvent";
-import { getPUSBEventById, getPUSBEventTimeline } from "../../api/pusb-events";
+import ContainerEvent from "../../../../../../components/pusb-event/ContainerEvent";
+import { getPUSBEventById, getPUSBEventTimeline } from "../../../../../../pages/api/pusb-events";
 
 const Page = () => {
   const { id } = useParams();

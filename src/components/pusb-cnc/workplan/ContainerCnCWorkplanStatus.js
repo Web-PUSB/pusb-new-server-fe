@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 import Loader from "../../shared/Loader";
 import {
   ActivatePUSBCNCWorkplan,
   DeactivatePUSBCNCWorkplan,
-} from "@/src/pages/api/pusb-cnc";
+} from "../../../pages/api/pusb-cnc";
 
-const ContainerCnCWorkplanStatus = ({ Workplan, cncId }) => {
+const ContainerCnCWorkplanStatus = ({ workplan, cncId }) => {
   const [loading, setLoading] = useState(null);
-  const [status, setStatus] = useState(Workplan.status); // Local status state
+  const [status, setStatus] = useState(workplan.status);
 
   const handleToggleStatus = async () => {
     const isCurrentlyActive = status;
@@ -25,14 +26,14 @@ const ContainerCnCWorkplanStatus = ({ Workplan, cncId }) => {
     });
 
     if (confirmResult.isConfirmed) {
-      setLoading(Workplan.id);
+      setLoading(workplan.id);
 
       try {
         let response;
         if (isCurrentlyActive) {
-          response = await DeactivatePUSBCNCWorkplan(cncId, Workplan.id);
+          response = await DeactivatePUSBCNCWorkplan(cncId, workplan.id);
         } else {
-          response = await ActivatePUSBCNCWorkplan(cncId, Workplan.id);
+          response = await ActivatePUSBCNCWorkplan(cncId, workplan.id);
         }
 
         if (response) {
@@ -46,7 +47,6 @@ const ContainerCnCWorkplanStatus = ({ Workplan, cncId }) => {
             showConfirmButton: false,
           });
 
-          // Update local status to trigger re-render
           setStatus(!isCurrentlyActive);
         }
       } catch (error) {
@@ -68,7 +68,7 @@ const ContainerCnCWorkplanStatus = ({ Workplan, cncId }) => {
 
   return (
     <div className="flex items-center h-full">
-      {loading === Workplan.id ? (
+      {loading === workplan.id ? (
         <Loader />
       ) : (
         <label className="inline-flex items-center cursor-pointer">
@@ -86,6 +86,14 @@ const ContainerCnCWorkplanStatus = ({ Workplan, cncId }) => {
       )}
     </div>
   );
+};
+
+ContainerCnCWorkplanStatus.propTypes = {
+  cncId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  workplan: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    status: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  }).isRequired,
 };
 
 export default ContainerCnCWorkplanStatus;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import FormWorkplan from "../../components/pusb-profile/Workplan/form/FormWorkplan";
+import FormWorkplan from "../../../../../../../components/pusb-profile/Workplan/form/FormWorkplan";
 
 const Page = () => {
   const { id } = useParams();

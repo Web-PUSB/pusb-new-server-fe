@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { FiTrash, FiEdit } from "react-icons/fi";
-import { formatTime } from "../utils/FormatTime"; // Adjust path as needed
+import { formatTime } from "../../../utils/FormatTime";
 import ModalTimeline from "./ModalTimeline";
 import ContainerEventTimelineStatus from "./ContainerEventTimelineStatus";
 

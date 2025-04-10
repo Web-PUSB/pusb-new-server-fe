@@ -93,6 +93,7 @@ function App() {
           <Route path="pusb-events/:id/edit" element={<EventsEdit />} />
           <Route path="pusb-events/:id/details" element={<EventsDetails />} />
           <Route path="pusb-events/:id/details/create-timeline" element={<EventsCreateTimeline />} />
+          <Route path="pusb-events/:id/details/edit-timeline" element={<EventsEditTimeline />} />
 
           {/* Profile routes */}
           <Route path="pusb-profile/profile/create" element={<ProfileCreate />} />

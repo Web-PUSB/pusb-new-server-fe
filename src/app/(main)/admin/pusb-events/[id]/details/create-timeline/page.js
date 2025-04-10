@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import FormTimeline from "../../components/pusb-event/form/FormTimeline";
+import FormTimeline from "../../../../../../../components/pusb-event/form/FormTimeline";
 
 const Page = () => {
   const { id } = useParams();

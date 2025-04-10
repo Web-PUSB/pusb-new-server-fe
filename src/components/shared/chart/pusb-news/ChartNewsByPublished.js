@@ -28,8 +28,12 @@ const ChartNewsByPublished = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getPUSBNews();        
-        const news = response.data;                 
+        const news = await getPUSBNews(); 
+
+        if (!Array.isArray(news)) {
+          console.error("Invalid news data:", news);
+          return;
+        }
 
         const monthCounts = Array(12).fill(0);
         const currentYear = new Date().getFullYear();

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button } from "flowbite-react";
 import { FiEdit, FiInstagram } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -72,6 +73,19 @@ const ContainerCnC = ({ cnc }) => {
       )}
     </section>
   );
+};
+
+ContainerCnC.propTypes = {
+  cnc: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    short_name: PropTypes.string.isRequired,
+    full_name: PropTypes.string,
+    category: PropTypes.string,
+    instagram: PropTypes.string,
+    image: PropTypes.string,
+    description: PropTypes.string,
+    highlight: PropTypes.string,
+  }),
 };
 
 export default ContainerCnC;

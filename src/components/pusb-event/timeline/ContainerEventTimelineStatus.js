@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import Loader from "../../shared/Loader";
 import {
-  ActivatePUSBEventTimeline,
-  DeactivatePUSBEventTimeline,
-} from "../../api/pusb-events"; 
+  activatePUSBEventTimeline,
+  deactivatePUSBEventTimeline,
+} from "../../../pages/api/pusb-events"; 
 
 const ContainerEventTimelineStatus = ({ eventId, eventTimeline, token }) => {
   const [loading, setLoading] = useState(null);
@@ -12,7 +12,6 @@ const ContainerEventTimelineStatus = ({ eventId, eventTimeline, token }) => {
   const handleToggleStatus = async (eventTimeline) => {
     const isCurrentlyActive = eventTimeline.status;
 
-    // Show confirmation dialog
     const confirmResult = await Swal.fire({
       title: `Are you sure?`,
       text: `You are about to ${isCurrentlyActive ? "deactivate" : "activate"} this CNC.`,
@@ -33,13 +32,13 @@ const ContainerEventTimelineStatus = ({ eventId, eventTimeline, token }) => {
       try {
         let response;
         if (isCurrentlyActive) {
-          response = await DeactivatePUSBEventTimeline(
+          response = await deactivatePUSBEventTimeline(
             token,
             eventId,
             eventTimeline.id
           );
         } else {
-          response = await ActivatePUSBEventTimeline(
+          response = await activatePUSBEventTimeline(
             token,
             eventId,
             eventTimeline.id
@@ -57,7 +56,6 @@ const ContainerEventTimelineStatus = ({ eventId, eventTimeline, token }) => {
             showConfirmButton: false,
           });
 
-          // Update the status
           eventTimeline.status = !isCurrentlyActive;
         }
       } catch (error) {

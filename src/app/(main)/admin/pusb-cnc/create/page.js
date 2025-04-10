@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import FormCnC from "../../../../../components/pusb-cnc/Form/FormCnC";
 
 const Page = () => {

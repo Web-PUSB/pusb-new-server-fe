@@ -19,7 +19,12 @@ const ChartNewsByCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: news } = await getPUSBNews(); 
+        const news = await getPUSBNews(); 
+
+        if (!Array.isArray(news)) {
+          console.error("Invalid news data:", news);
+          return;
+        }
 
         const categoryCounts = {
           "Press Release": Array(12).fill(0),
@@ -28,6 +33,7 @@ const ChartNewsByCategory = () => {
         };
 
         const currentYear = new Date().getFullYear();
+        
 
         news.forEach((item) => {
           const publishDate = new Date(item.publish_date);

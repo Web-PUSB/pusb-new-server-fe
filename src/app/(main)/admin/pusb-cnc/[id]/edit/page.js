@@ -1,5 +1,6 @@
 import React from "react";
-import FormCnC from "../components/pusb-cnc/Form/FormCnC";
+import PropTypes from "prop-types";
+import FormCnC from "../../../../../../components/pusb-cnc/Form/FormCnC";
 
 const Page = ({ match }) => {
   const { id } = match.params;
@@ -17,6 +18,14 @@ const Page = ({ match }) => {
       <FormCnC isEditMode={true} id={id} />
     </div>
   );
+};
+
+Page.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default Page;

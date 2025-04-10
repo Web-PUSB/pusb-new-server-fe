@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FileInput, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { CreatePUSBCNC, getPUSBCNCById, UpdatePUSBCNC } from "../../api/pusb-cnc";
-import SuccessMessageAlert from "../../lib/SuccessMessageAlert";
-import FailedMessageAlert from "../../lib/FailedMessageAlert";
+import { CreatePUSBCNC, getPUSBCNCById, UpdatePUSBCNC } from "../../../pages/api/pusb-cnc";
+import SuccessMessageAlert from "../../../lib/SuccessMessageAlert";
+import FailedMessageAlert from "../../../lib/FailedMessageAlert";
 import Loader from "../../shared/Loader";
+import PropTypes from "prop-types";
+
+FormCnC.propTypes = {
+  isEditMode: PropTypes.bool.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 const FormCnC = ({ isEditMode, id }) => {
   const [formCncData, setFormCncData] = useState({
@@ -238,6 +244,11 @@ const FormCnC = ({ isEditMode, id }) => {
       </div>
     </form>
   );
+};
+
+FormCnC.propTypes = {
+  isEditMode: PropTypes.bool.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default FormCnC;

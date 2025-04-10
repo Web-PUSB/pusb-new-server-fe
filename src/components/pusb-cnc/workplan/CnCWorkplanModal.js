@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Button, Modal } from "flowbite-react";
 
-const CnCWorkplanModal = ({ cncId, WorkplanId }) => {
+const CnCWorkplanModal = ({ cncId, workplanId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [workplan, setWorkplan] = useState(null);
 
@@ -16,10 +17,10 @@ const CnCWorkplanModal = ({ cncId, WorkplanId }) => {
       }
     };
 
-    if (cncId && WorkplanId) {
-      fetchData(cncId, WorkplanId);
+    if (cncId && workplanId) {
+      fetchData(cncId, workplanId);
     }
-  }, [cncId, WorkplanId]);
+  }, [cncId, workplanId]);
 
   const handleOpenModal = () => {
     setOpenModal(!openModal);
@@ -72,6 +73,11 @@ const CnCWorkplanModal = ({ cncId, WorkplanId }) => {
       </Modal>
     </>
   );
+};
+
+CnCWorkplanModal.propTypes = {
+  cncId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  workplanId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default CnCWorkplanModal;
